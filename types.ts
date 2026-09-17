@@ -1,0 +1,74 @@
+
+export enum ButtonType {
+  Primary = 'primary',
+  Secondary = 'secondary',
+  Accent = 'accent',
+  Neutral = 'neutral',
+  Memory = 'memory',
+  Danger = 'danger',
+  Function = 'function'
+}
+
+export interface TapeEntry {
+  expression: string;
+  result: number;
+  dimension: number;
+  isUnitless: boolean;
+  preferredUnit: 'feet' | 'inch' | 'yard';
+}
+
+export interface FormattedValue {
+  yard: number; // ADDED: Specific value for Yards
+  feet: number;
+  inch: number;
+  numerator: number;
+  denominator: number;
+  isNegative: boolean;
+  // Visual helpers for the input mode
+  showFeetLabel: boolean;
+  showInchLabel: boolean;
+  showYardLabel: boolean; // Added Yard
+  showDash: boolean;
+  inputBuffer: string; // To show what is currently being typed (ghosted or active)
+  secondaryDisplay?: string; // The bottom line (e.g., "20.125 INCH")
+  dimensionLabel?: string; // Full engineering-style label (e.g. "SQUARE FEET")
+  dimension: number; // 1 = Linear, 2 = Square (SQ), 3 = Cubic (CB)
+}
+
+export enum Operator {
+  Add = '+',
+  Subtract = '-',
+  Multiply = '*',
+  Divide = '÷',
+  None = ''
+}
+
+export interface BuilderState {
+  feet: number | null;
+  inch: number | null;
+  yard: number | null; // Added Yard support
+  numerator: number | null;
+  denominator: number | null;
+  dimension: number; // 1, 2, or 3
+}
+
+export interface CalculatorState {
+  displayValue: number; // The calculated result (decimal feet)
+  builder: BuilderState; // The current value being typed
+  inputBuffer: string; // The raw numbers being typed before pressing a unit
+  operator: Operator;
+  waitingForOperand: boolean; // True if we just hit +, -, *, /
+  previousValue: number | null;
+  memory: number;
+  memoryHasValue: boolean;
+  memoryDimension: number;
+  memoryIsUnitless: boolean;
+  memoryPreferredUnit: 'feet' | 'inch' | 'yard';
+  tape: TapeEntry[];
+  isConversionMode: boolean; // True after pressing 'Conv'
+  convertedUnit: 'feet' | 'inch' | 'yard' | null; // The unit to display the result in
+  convertedDimension: number; // 1, 2, or 3 for the converted unit
+  activeDimension: number; // The dimension of the current result (1, 2, or 3)
+  isUnitless: boolean; // True if the current result has no specific unit assigned (pure math)
+  preferredUnit: 'feet' | 'inch' | 'yard'; // ADDED: Tracks the user's preferred unit for display (default 'feet')
+}

@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Construction Calc</title>
+    <link rel="icon" href="./icon.png" />
+    <link rel="apple-touch-icon" href="./icon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: "#F45D5D",
+              secondary: "#FCD35F",
+              accent: "#389D8F",
+              surface: "#2D3136",
+              "surface-dark": "#23272B",
+              "background-light": "#F3F4F6",
+              "background-dark": "#1A1D21",
+              "display-dark": "#111315",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+              mono: ["Roboto Mono", "monospace"],
+            },
+            boxShadow: {
+                'btn': '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)',
+                'btn-active': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.1)',
+            }
+          },
+        },
+      };
+    </script>
+    <style>
+      body, html {
+        height: 100%;
+        overflow: hidden;
+      }
+      .aero-glass-background {
+        background:
+          radial-gradient(circle at 12% 10%, rgba(81, 177, 255, .42), transparent 30%),
+          radial-gradient(circle at 88% 88%, rgba(255, 89, 141, .28), transparent 32%),
+          linear-gradient(135deg, #cbddeb, #9ebfd6 48%, #d3b8c8);
+      }
+      .dark .aero-glass-background {
+        background:
+          radial-gradient(circle at 12% 10%, rgba(25, 116, 215, .45), transparent 32%),
+          radial-gradient(circle at 88% 88%, rgba(136, 55, 164, .30), transparent 30%),
+          linear-gradient(135deg, #0a1827, #142e48 52%, #251735);
+      }
+      .aero-glass-surface {
+        background: rgba(255, 255, 255, .47) !important;
+        border: 1px solid rgba(255, 255, 255, .58);
+        backdrop-filter: blur(28px) saturate(145%);
+        -webkit-backdrop-filter: blur(28px) saturate(145%);
+        box-shadow: 0 26px 58px rgba(26, 55, 82, .25), inset 0 1px 0 rgba(255, 255, 255, .72);
+      }
+      .dark .aero-glass-surface { background: rgba(15, 31, 48, .62) !important; border-color: rgba(174, 215, 255, .20); box-shadow: 0 26px 58px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255, 255, 255, .13); }
+      .aero-glass-display-section { background: rgba(255, 255, 255, .10); }
+      .aero-glass-keypad { background: rgba(220, 240, 255, .22) !important; border-color: rgba(255, 255, 255, .34) !important; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+      .dark .aero-glass-keypad { background: rgba(5, 17, 29, .27) !important; border-color: rgba(162, 211, 255, .17) !important; }
+      .aero-glass-display { background: rgba(248, 252, 255, .48) !important; border-color: rgba(255, 255, 255, .68) !important; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+      .dark .aero-glass-display { background: rgba(7, 15, 24, .53) !important; border-color: rgba(111, 184, 255, .30) !important; }
+      .aero-glass-keypad .aero-key {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(226, 244, 255, .76) !important;
+        background-blend-mode: normal !important;
+        backdrop-filter: blur(12px) saturate(150%);
+        -webkit-backdrop-filter: blur(12px) saturate(150%);
+        box-shadow: 0 5px 0 rgba(3, 11, 19, .56), 0 9px 17px rgba(0, 0, 0, .27), inset 0 2px 1px rgba(255, 255, 255, .78), inset 0 -4px 9px rgba(0, 0, 0, .30) !important;
+      }
+      .aero-glass-keypad .aero-key::after {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        inset: 4px 7px auto;
+        height: 31%;
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, .62), rgba(255, 255, 255, .07));
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, .60);
+      }
+      .aero-glass-keypad .aero-key:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(3, 11, 19, .56), 0 4px 8px rgba(0, 0, 0, .24), inset 0 2px 7px rgba(0, 0, 0, .30) !important; }
+      .aero-glass-keypad .aero-key-primary, .aero-glass-keypad .aero-key-danger {
+        background: linear-gradient(180deg, #ff5961 0%, #e9323e 43%, #a81322 100%) !important;
+        border-color: #ffbdc1 !important;
+        box-shadow: 0 5px 0 #74101a, 0 0 10px rgba(255, 65, 79, .72), 0 9px 17px rgba(0, 0, 0, .27), inset 0 2px 1px rgba(255, 255, 255, .82), inset 0 -5px 10px rgba(93, 0, 10, .36) !important;
+      }
+      .aero-glass-keypad .aero-key-secondary {
+        background: linear-gradient(180deg, #ffe64a 0%, #ffd713 43%, #e1a800 100%) !important;
+        border-color: #fff4a9 !important;
+        box-shadow: 0 5px 0 #a86f00, 0 0 10px rgba(255, 210, 20, .72), 0 9px 17px rgba(0, 0, 0, .27), inset 0 2px 1px rgba(255, 255, 255, .86), inset 0 -5px 10px rgba(163, 103, 0, .30) !important;
+      }
+      .aero-glass-keypad .aero-key-accent {
+        background: linear-gradient(180deg, #38d9c4 0%, #16b6a4 43%, #087c79 100%) !important;
+        border-color: #a2fff1 !important;
+        box-shadow: 0 5px 0 #075658, 0 0 10px rgba(33, 226, 202, .70), 0 9px 17px rgba(0, 0, 0, .27), inset 0 2px 1px rgba(255, 255, 255, .82), inset 0 -5px 10px rgba(0, 76, 74, .35) !important;
+      }
+      .aero-glass-keypad .aero-key-memory {
+        background: linear-gradient(180deg, #3978f8 0%, #1250dc 43%, #082c9f 100%) !important;
+        border-color: #9bc4ff !important;
+        box-shadow: 0 5px 0 #061c76, 0 0 10px rgba(38, 108, 255, .70), 0 9px 17px rgba(0, 0, 0, .27), inset 0 2px 1px rgba(255, 255, 255, .78), inset 0 -5px 10px rgba(0, 21, 112, .38) !important;
+      }
+      .aero-glass-keypad .aero-key-function {
+        background: linear-gradient(180deg, #ffae36 0%, #ff8205 43%, #cb5100 100%) !important;
+        border-color: #ffe0a4 !important;
+        box-shadow: 0 5px 0 #963600, 0 0 10px rgba(255, 130, 5, .70), 0 9px 17px rgba(0, 0, 0, .27), inset 0 2px 1px rgba(255, 255, 255, .84), inset 0 -5px 10px rgba(112, 40, 0, .36) !important;
+      }
+      .aero-glass-keypad .aero-key-neutral {
+        background: linear-gradient(180deg, rgba(114, 139, 164, .96) 0%, rgba(54, 76, 99, .96) 43%, rgba(27, 43, 60, .98) 100%) !important;
+        border-color: rgba(212, 234, 255, .76) !important;
+        box-shadow: 0 5px 0 #111f2d, 0 0 8px rgba(137, 190, 245, .20), 0 9px 17px rgba(0, 0, 0, .30), inset 0 2px 1px rgba(255, 255, 255, .76), inset 0 -5px 10px rgba(0, 11, 24, .43) !important;
+      }
+      .aero-glass-logo, .aero-glass-control { border-color: rgba(255, 255, 255, .32) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 6px 16px rgba(9, 35, 74, .20); }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+  </body>
+</html>
