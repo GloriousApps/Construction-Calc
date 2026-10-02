@@ -10,7 +10,7 @@ import { checkForUpdate, downloadUpdate, installAPK, GithubRelease } from './uti
 import { UpdateModal } from './components/UpdateModal';
 import { SettingsModal } from './components/SettingsModal';
 
-const APP_VERSION = '1.0.2';
+const APP_VERSION = '1.0.3';
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(true);
